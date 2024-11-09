@@ -1,0 +1,75 @@
+﻿@model IEnumerable<PracticeWeb.Classes.LocalClasses.UserForSystemClass>
+
+@{
+    Layout = "_LayoutAdmin";
+}
+
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+
+<link rel="stylesheet" href="~/css/site.css" />
+
+
+<div class="content-container">
+
+    <form asp-action="Create">
+        <button type="submit">Новый пользователь</button>
+    </form>
+
+    <table class="table-style">
+        <thead>
+            <tr>
+                <th>
+                    Id
+                </th>
+                <th>
+                    Имя пользователя
+                </th>
+                <th>
+                    Логин
+                </th>
+                <th>
+                    Пароль
+                </th>
+                <th>
+                    Роль
+                </th>
+            </tr>
+        </thead>
+        <tbody class="border-dark">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NickName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Login)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Password)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Role)
+                    </td>
+                    <td>
+                        <form asp-action="Edit">
+                            <input type="hidden" name="Id" value="@item.Id" />
+                            <input type="hidden" name="NickName" value="@item.NickName" />
+                            <input type="hidden" name="Login" value="@item.Login" />
+                            <input type="hidden" name="Password" value="@item.Password" />
+                            <input type="hidden" name="Role" value="@item.Role" />
+                            <button type="submit">Редактировать</button>
+                        </form>
+                        <form asp-action="Delete">
+                            <input type="hidden" name="Id" value="@item.Id" />
+                            <button type="submit">Удалить</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

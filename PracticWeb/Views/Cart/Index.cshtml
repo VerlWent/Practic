@@ -1,0 +1,173 @@
+﻿@*<style>
+    .MainDiv {
+        width: 100%;
+        height: 200px;
+        padding-right: var(--bs-gutter-x, 0.75rem);
+        padding-left: var(--bs-gutter-x, 0.75rem);
+        margin-right: auto;
+        margin-left: auto;
+        border: solid;
+        border-color: black;
+        margin-bottom: 10px;
+    }
+
+    .Main-text-center {
+        text-align: center !important;
+    }
+
+    .Main-align-items-start {
+        align-items: flex-start !important;
+    }
+
+    .Main-row {
+        --bs-gutter-x: 1.5rem;
+        --bs-gutter-y: 0;
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: calc(var(--bs-gutter-y) * -1);
+        margin-right: calc(var(--bs-gutter-x) * -.5);
+        margin-left: calc(var(--bs-gutter-x) * -.5);
+    }
+
+    .Maincol {
+        flex: 1 0 0%;
+    }
+
+    .Main-img-fluid {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .Main-img-thumbnail {
+        padding: 0.25rem;
+        background-color: #fff;
+        border: 1px solid #dee2e6;
+        border-radius: 0.25rem;
+        max-width: auto;
+        max-height: 190px;
+    }
+
+    .EndDiv {
+        margin-left: auto;
+        margin-right: 0px;
+    }
+
+</style>*@
+
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+
+<link rel="stylesheet" href="~/css/site.css" />
+
+@model IEnumerable<PracticeWeb.Classes.LocalClasses.CartClass>
+
+
+    @if (TempData["DanderMessage"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @TempData["DanderMessage"]
+        </div>
+    }
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+    @*@foreach (var item in Model)
+    {
+        <form class="MainDiv Main-text-center" asp-controller="Cart" asp-action="BuyOneItem">
+            <input type="hidden" name="IdProduct" value="@item.Id">
+            <div class="Main-row Main-align-items-start">
+                <div class="Maincol">
+                    <img class="Main-img-fluid Main-img-thumbnail"/>
+                </div>
+                <div class="Maincol">
+                    <p>Наименование: @item.Name</p>
+                    <p>Цена: @item.Price</p>
+                </div>
+
+                <div class="Maincol">
+                    <p>Кол-во: @item.Count</p>
+                </div>
+
+                <div class="Maincol">
+                    <p></p>
+                    <button type="submit">Купить</button>
+                </div>
+            </div>
+        </form>
+    }*@
+
+<div class="content-container">
+    <table class="table-style">
+        <thead>
+            <tr>
+                <th>
+                    Картинка
+                </th>
+                <th>
+                    Товар
+                </th>
+                <th>
+                    Цена
+                </th>
+                <th>
+                    Количество
+                </th>
+                <th>
+                    Итог
+                </th>
+            </tr>
+        </thead>
+        <tbody class="border-dark">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <img src="https://i.ibb.co/@item.Image" border="0" style="max-width:100px; max-height:100px">
+                    </td>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        <form asp-action="ChangeCountMinus">
+                            <input type="hidden" name="product.Id" value="@item.Id" />
+                            <button type="submit">-</button>
+                        </form>
+
+                        @Html.DisplayFor(modelItem => item.Count)
+
+                        <form asp-action="ChangeCountPlus">
+                            <input type="hidden" name="product.Id" value="@item.Id" />
+                            <button type="submit">+</button>
+                        </form>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.resultPrice)
+                    </td>
+                    <td>
+                        <form asp-action="DeleteConfirmed" asp-route-id="@item.Id">
+                            <input type="hidden" name="productId" value="@item.Id" />
+                            <button type="submit">Удалить</button>
+                        </form>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<form class="EndDiv" asp-action="BuyFullCart">
+    @if (TempData["FullPriceMessage"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            @TempData["FullPriceMessage"]
+        </div>
+    }
+    <button type="submit">Купить всё</button>
+</form>

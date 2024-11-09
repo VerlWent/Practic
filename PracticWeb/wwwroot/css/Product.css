@@ -1,0 +1,14 @@
+﻿.ProductRow {
+    display:flex;
+    flex-direction:row;
+}
+
+.ProductCol{
+
+}
+
+.ProductRow img {
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 100px;
+}

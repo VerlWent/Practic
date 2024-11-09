@@ -1,0 +1,91 @@
+﻿@model IEnumerable<PracticeWeb.Classes.Product>
+
+@{
+    Layout = "_LayoutAdmin";
+}
+
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+
+<link rel="stylesheet" href="~/css/site.css" />
+
+
+<div class="content-container">
+
+    <form asp-action="Create">
+        <button type="submit">Новый товар</button>
+    </form>
+
+    <table class="table-style">
+        <thead>
+            <tr>
+                <th>
+                    Id
+                </th>
+                <th>
+                    Изображение
+                </th>
+                <th>
+                    Наименование
+                </th>
+                <th>
+                    Дата добавления
+                </th>
+                <th>
+                    Цена
+                </th>
+                <th>
+                    Категория
+                </th>
+                <th>
+                    На складе
+                </th>
+            </tr>
+        </thead>
+        <tbody class="border-dark">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        <img src="https://i.ibb.co/@item.Image" border="0" width="100">
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateAdded)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CountInStock)
+                    </td>
+                    <td>
+                        <form asp-action="Edit">
+                            <input type="hidden" name="Id" value="@item.Id" />
+                            <input type="hidden" name="Name" value="@item.Name" />
+                            <input type="hidden" name="Description" value="@item.Description" />
+                            <input type="hidden" name="DateAdded" value="@item.DateAdded" />
+                            <input type="hidden" name="Image" value="@item.Image" />
+                            <input type="hidden" name="Price" value="@item.Price" />
+                            <input type="hidden" name="Category" value="@item.Category" />
+                            <input type="hidden" name="CountInStock" value="@item.CountInStock" />
+
+                            <button type="submit">Редактировать</button>
+                        </form>
+                        <form asp-action="Delete">
+                            <input type="hidden" name="Id" value="@item.Id" />
+                            <button type="submit">Удалить</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

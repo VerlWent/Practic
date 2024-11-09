@@ -1,0 +1,53 @@
+﻿@model IEnumerable<PracticeWeb.Classes.LocalClasses.OrderClass>
+
+
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+
+<link rel="stylesheet" href="~/css/site.css" />
+
+
+<div class="content-container">
+    <table class="table-style">
+        <thead>
+            <tr>
+                <th>
+                    Картинка
+                </th>
+                <th>
+                    Товар
+                </th>
+                <th>
+                    Цена
+                </th>
+                <th>
+                    Количество
+                </th>
+                <th>
+                    Дата покупки
+                </th>
+            </tr>
+        </thead>
+        <tbody class="border-dark">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <img src="https://i.ibb.co/@item.Image" border="0" style="max-width:100px; max-height:100px">
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Count)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DatePurchase)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

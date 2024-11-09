@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"] - KeyNastle</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Header.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/KeyNastle.styles.css" asp-append-version="true" />
+</head>
+
+<body style="margin: 0; ">
+    <header style="background: #272727;">
+        <nav class="navbar navbar-expand-sm">
+            <div class="container-fluid">
+                <a asp-controller="Home" asp-action="Index"><img style="width:50%; height:auto; margin-right:auto;" class="navbar-brand" src="~/Images/Логотип2.png"></a>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <form class="form-header1" style="width: 70%; padding: 10px;">
+                        <input placeholder="Поиск по товарам, категориям" type="search" style="background: transparent; border: none; width: 100%; color: white;">
+                    </form>
+                    @{
+                        var authorizationCookie = Context.Request.Cookies["Authorization"];
+                    }
+                    <div class="dropdown" style="float:right;">
+                        <button class="dropbtn"><img src="~/Images/Mugshot.svg" style="width:40px"></button>
+                        <div class="dropdown-content">
+                            
+                            @if (!string.IsNullOrEmpty(authorizationCookie))
+                            {
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="Index">История</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="Index">Корзина</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Identification" asp-action="Logout">Выход</a>
+                            }
+                            else
+                            {
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Identification" asp-action="RegistrationView">Регистрация</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Identification" asp-action="AuthorizationView">Авторизация</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+</body>
+</html>

@@ -1,0 +1,56 @@
+﻿<style>
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+        
+    }
+
+    .ProductRow {
+        width: 20%; /* Ширина 20% для 5 элементов в строке */
+        margin: 5px;
+        overflow: hidden; /* Чтобы изображение не выходило за пределы */
+        
+    }
+
+        .ProductRow img {
+            width: 100%; /* 100% ширина для изображения внутри элемента */
+            height: 40%;
+            object-fit: cover;
+        }
+
+</style>
+
+@model IEnumerable<PracticeWeb.Classes.Product>
+
+<!DOCTYPE html>
+<html lang="en">
+<body>
+    @if (TempData["DangerMessage"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @TempData["DangerMessage"]
+        </div>
+    }
+    <div class="container">
+        @foreach (var item in Model)
+        {
+            <form class="ProductRow" asp-action="AddToCart" asp-controller="Home" method="post">
+                <input type="hidden" name="product.Id" value="@item.Id" />
+                <input type="hidden" name="product.Name" value="@item.Name" />
+                <input type="hidden" name="product.Description" value="@item.Description" />
+                <input type="hidden" name="product.Price" value="@item.Price" />
+                <input type="hidden" name="product.CountInStock" value="@item.CountInStock" />
+                <input type="hidden" name="product.Image" value="@item.Image" />
+
+                <img src="https://i.ibb.co/@item.Image" border="0">
+                <p>Наименование: @item.Name</p>
+                <p>Описание: @item.Description</p>
+                <p>Цена: @item.Price</p>
+                <p>Кол-во: @item.CountInStock</p>
+
+                <button type="submit">В корзину</button>
+            </form>
+        }
+    </div>
+</body>
+</html>
